@@ -1,3 +1,4 @@
+//tricky
 class Solution {
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> lst = new ArrayList<>();
