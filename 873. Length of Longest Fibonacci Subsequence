@@ -1,0 +1,20 @@
+//HashMap + DP
+//time complexity: O(n!)for two for-loops; space complexity: O(n*n)
+class Solution {
+    public int lenLongestFibSubseq(int[] A) {
+        int res = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int len = A.length;
+        int[][] sum = new int[len][len];//the length of valid sequence end with A[i],A[j]
+        for (int i=0;i<len;++i) {
+            map.put(A[i],i);
+            for (int j=0;j<i;++j){
+                int index = map.get(A[i]-A[j]) == null ? -1 : map.get(A[i]-A[j]);
+                //update the length of valid sequence by adding 1, if not, keep the length == 2
+                sum[j][i] = (A[j] > A[i]-A[j] && index >= 0) ? (sum[index][j] + 1) : 2;
+                res = Math.max(sum[j][i],res);
+            }
+        }
+        return res > 2 ? res : 0;
+    }
+}
