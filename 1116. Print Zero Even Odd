@@ -1,0 +1,40 @@
+class ZeroEvenOdd {
+    private int n;
+    private Semaphore sema1;
+    private Semaphore sema2;
+    private Semaphore sema3;
+    
+    public ZeroEvenOdd(int n) {
+        this.n = n;
+        this.sema1 = new Semaphore(1);//run 1 procedure at one time
+        this.sema2 = new Semaphore(0);
+        this.sema3 = new Semaphore(0);
+    }
+
+    public void zero(IntConsumer printNumber) throws InterruptedException {
+        for (int i=1;i<=n;i++) {
+            sema1.acquire();
+            printNumber.accept(0); //outputs "0", where 0 is an integer.
+            if ((i&1) == 1) //binary check, odd
+                sema3.release();
+            else //even
+                sema2.release();
+        }        
+    }
+
+    public void even(IntConsumer printNumber) throws InterruptedException {
+        for (int i=2;i<=n;i+=2) {
+            sema2.acquire();
+            printNumber.accept(i); //outputs "i", where i is an integer.
+            sema1.release();
+        }
+    }
+
+    public void odd(IntConsumer printNumber) throws InterruptedException {
+        for (int i=1;i<=n;i+=2) {
+            sema3.acquire();
+            printNumber.accept(i); //outputs "i", where i is an integer.
+            sema1.release();
+        }        
+    }
+}
