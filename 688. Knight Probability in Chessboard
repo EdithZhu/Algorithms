@@ -1,0 +1,31 @@
+//dynamic programming
+//time complexity: O(K*N*N); space complexity: O(N*N)
+class Solution {
+    public double knightProbability(int N, int K, int r, int c) {
+        if (K == 0) return 1;//edge case, 0<=N<=100
+        if (N <= 2) return 0;//edge case, 1<=N<=25
+        double allCase = Math.pow(8,K);//for K moves, each move has 8 cases
+        int[][] move = {{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1},{-2,1},{-1,2}};
+        double[][] count = new double[N][N];
+        for (int i=0;i<N;i++) {//initialization, every element is 1
+            for (int j=0;j<N;j++)
+                count[i][j] = 1.0;
+        }
+        for (int i=0;i<K;i++) {//update count matrix after each move
+            double[][] save = new double[N][N];
+            for (int j=0;j<N;j++) {
+                for (int k=0;k<N;k++) {
+                    for (int l=0;l<move.length;l++) {
+                        int x=j+move[l][0];
+                        int y=k+move[l][1];
+                        if (x<0 || y<0 || x>N-1 || y>N-1)
+                            continue; // skip this iteration
+                        else 
+                            save[j][k] = save[j][k] + count[x][y];
+                    }
+                }
+            } count = save;//inside 1st loop, outside 2nd loop
+        }
+        return count[r][c]/allCase;//data type: double
+    }
+}
