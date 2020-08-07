@@ -1,0 +1,23 @@
+//stack
+//time complexity: O(n); space complexity: O(n) in the worst case
+class Solution {
+    public boolean isValid(String S) {
+        if (S.length() < 3 || S == null) return false;
+        Stack<Character> stack = new Stack<>();
+        for (char x: S.toCharArray()) {
+            if (x == 'c') {//if find "abc", pop from the stack
+                if (stack.size() != 0) {
+                    if (stack.peek() == 'b') {
+                        stack.pop();
+                        if (stack.size() != 0) {
+                            if (stack.peek() == 'a')
+                                stack.pop();
+                        }
+                    }
+                }
+            } else 
+                stack.push(x);
+        }
+        return stack.size() == 0;
+    }
+}
