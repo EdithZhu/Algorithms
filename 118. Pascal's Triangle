@@ -1,0 +1,23 @@
+//brute force
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        
+        if (numRows == 0) return res;
+        List<Integer> firstRow = new ArrayList<Integer>();
+        firstRow.add(1);
+        res.add(firstRow);
+        if (numRows == 1) return res;
+        for (int i=1;i<numRows;i++) {
+            List<Integer> addRow = new ArrayList<>();
+            addRow.add(1);//automatically insert '1' at the beginning
+            int len = res.size();
+            List<Integer> lastRow = new ArrayList<Integer>(res.get(len-1));//get the last row
+            for (int j = 0;j<lastRow.size()-1;j++) 
+                addRow.add(lastRow.get(j) + lastRow.get(j+1));//compute the sum
+            addRow.add(1);//automatically insert '1' at the end
+            res.add(addRow);
+        }
+        return res;
+    }
+}
