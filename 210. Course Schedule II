@@ -1,0 +1,37 @@
+//bfs
+//time complexity: O(V+E) # of vertices + # of edges; space complexity: O(V+E)  
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] res = new int[numCourses];
+        int len = prerequisites.length;
+        int[] count = new int[numCourses];
+        for (int i=0;i<len;i++) 
+            count[prerequisites[i][1]] = 1 + count[prerequisites[i][1]];
+        
+        Queue<Integer> q = new LinkedList<Integer>();
+        int idx = numCourses-1;
+        for (int i=0;i<numCourses;i++) {
+            if (count[i] == 0) {//check if the course is the prerequisite of other courses
+                q.offer(i);
+                res[idx] = i;
+                idx--;
+            }
+        }
+        while (q.size() != 0) {
+            int postCourse = q.poll();
+            for (int i=0;i<len;i++) {
+                int preCourse = prerequisites[i][1];
+                if (prerequisites[i][0] == postCourse) {
+                    count[preCourse]--;
+                    if (count[preCourse] == 0){
+                        q.offer(preCourse);
+                        res[idx] = preCourse;
+                        idx--;
+                        
+                    }
+                }
+            }
+        }
+        return idx == -1 ? res : new int[]{};
+    }
+}
