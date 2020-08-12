@@ -1,0 +1,36 @@
+//KMP algorithm
+//cannot use .indexOf()
+//time complexity: O(hlen + nlen)
+//space complexity: O(nlen)
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int hlen = haystack.length();
+        int nlen = needle.length();
+        if (nlen == 0 || needle == null) return 0;//edge case
+        if (nlen > hlen) return -1;//edge case
+        int[] count = new int[nlen];
+        int j=0;
+        for (int i=1;i<nlen;i++) {
+            while (j>0 && needle.charAt(i) != needle.charAt(j))
+                j = count[j-1];
+            if (needle.charAt(i) == needle.charAt(j)) {
+                count[i] = j+1;
+                j++;
+            }
+        }
+        
+        int n=0;
+        int index = 0;
+        for (int m=0;m<hlen;m++) {
+            if (n == nlen) return m-n;
+            while (n>0 && haystack.charAt(m) != needle.charAt(n))
+                n = count[n-1];
+            if (haystack.charAt(m) == needle.charAt(n)) {
+                n++;
+            }
+            index = m;
+        }
+        if (n != nlen) return -1;
+        else return index-n+1;
+    }
+}
