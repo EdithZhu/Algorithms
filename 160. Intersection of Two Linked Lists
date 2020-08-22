@@ -1,0 +1,44 @@
+//two pointers
+//time complexity: O(n+m); space complexity: O(1)
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        
+        ListNode tmp1 = headA, tmp2 = headB;
+        ListNode tmp3 = headA, tmp4 = headB;//requirement: retain their original structure after the function returns.
+        int count1 = 0, count2 = 0;
+        while (tmp1 != null) {
+            tmp1 = tmp1.next;
+            count1++;
+        }
+        while (tmp2 != null) {
+            tmp2 = tmp2.next;
+            count2++;
+        }
+        if (count2 > count1) { //adjust the starting points
+            while (count2 > count1) {
+                tmp4 = tmp4.next;
+                count2--;
+            }} else if (count2 < count1){
+            while (count2 < count1) {
+                tmp3 = tmp3.next;
+                count1--;
+            }}
+        while (tmp3 != tmp4) { //check 
+            tmp3 = tmp3.next;
+            tmp4 = tmp4.next;
+        }
+        return tmp3;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
