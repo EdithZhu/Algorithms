@@ -1,0 +1,16 @@
+//1. You must do this in-place without making a copy of the array.
+//2. Minimize the total number of operations.
+//time complexity: O(n);space complexity: O(1) 
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int index = 0;
+        for (int i=0;i<nums.length;i++) {
+            if (nums[i] != 0){//no '0' before, swap with itself, otherwise, swap with '0'
+                int tmp = nums[i];
+                nums[i] = nums[index];
+                nums[index] = tmp;
+                index++;
+            }
+        }
+    }
+}
