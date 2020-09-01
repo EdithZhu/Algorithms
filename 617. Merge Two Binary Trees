@@ -1,0 +1,70 @@
+//recursive
+//time complexity: O(n); space complexity: O(n)
+public class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null)
+            return t2;
+        if (t2 == null)
+            return t1;
+        t1.val += t2.val;
+        t1.left = mergeTrees(t1.left, t2.left);
+        t1.right = mergeTrees(t1.right, t2.right);
+        return t1;
+    }
+}
+
+
+//iterative
+//time complexity: O(n); space complexity: O(n)
+class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) return null;
+        if (t1 == null) return t2;
+        if (t2 == null) return t1;
+        TreeNode n1 = t1;
+        TreeNode n2 = t2;
+        TreeNode res = n2;
+        res.val = t1.val + t2.val;
+        Queue<TreeNode> q1 = new LinkedList<>(){{offer(t1);}};
+        Queue<TreeNode> q2 = new LinkedList<>(){{offer(t2);}};
+        
+        while ( !(q1.isEmpty() && q2.isEmpty()) ) {
+            n1 = q1.poll();
+            n2 = q2.poll();
+            if (n1.left != null && n2.left != null) {
+                n2.left.val += n1.left.val;
+                q1.offer(n1.left);
+                q2.offer(n2.left);
+            } else if (n1.left != null && n2.left == null) {
+                n2.left = new TreeNode(n1.left.val); //create left node
+                q1.offer(n1.left);
+                q2.offer(n2.left);
+            }            
+            if (n1.right != null && n2.right != null) {
+                n2.right.val += n1.right.val;
+                q1.offer(n1.right);
+                q2.offer(n2.right);
+            } else if (n1.right != null && n2.right == null) {
+                n2.right = new TreeNode(n1.right.val); //create right node
+                q1.offer(n1.right);
+                q2.offer(n2.right);
+            }
+        }
+        return res;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
