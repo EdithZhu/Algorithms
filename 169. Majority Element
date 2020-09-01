@@ -1,0 +1,32 @@
+//You may assume that the array is non-empty and the majority element always exist in the array.
+//
+//time complexity: ;space complexity: 
+class Solution {
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        return nums[len/2];
+    }
+}
+
+
+//You may assume that the array is non-empty and the majority element always exist in the array.
+//HashMap
+//time complexity: O(n);space complexity: O(n); 
+class Solution {
+    public int majorityElement(int[] nums) {
+        int len = nums.length;        
+        HashMap<Integer,Integer> map = new HashMap<>();
+        
+        int i;
+        for (i=0;i<len;i++) {
+            int num = nums[i];
+            int count = map.getOrDefault(num,0) + 1;
+            map.put(num, count);
+            if (count > len/2) {
+                return num;
+            }
+        }
+        return -1;
+    }
+}
