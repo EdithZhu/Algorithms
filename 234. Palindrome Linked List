@@ -1,0 +1,68 @@
+//ArrayList
+//time complexity: 0(n)
+//space complexity: 0(n)
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ArrayList<Integer> lst = new ArrayList<>();      
+        ListNode tmp = head;      
+        while (tmp != null) {
+            lst.add(tmp.val);
+            tmp = tmp.next;
+        }
+        if (lst.size() <= 1) return true;//edge case
+        
+        int start = 0, end = lst.size()-1;//2 pointers
+        while (start < end) {
+            int val1 = lst.get(start++);
+            int val2 = lst.get(end--);
+            if (val1 != val2) return false;
+        }
+        return true;
+    }
+}
+
+
+//follow up: Could you do it in O(n) time and O(1) space?
+//reverse half of the list
+//time complexity: 0(n); space complexity: 0(1)
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true; //edge case        
+        ListNode pointer1 = head, pointer2 = head;//pointer1: 1 step, pointer2: 2 step
+        while (pointer2 != null && pointer2.next != null) {//go to the last node
+            pointer1 = pointer1.next;
+            pointer2 = pointer2.next.next;
+        }
+        if (pointer2 != null) //length is odd
+            pointer1 = pointer1.next;
+        pointer1 = reverse(pointer1);
+        pointer2 = head;
+        while (pointer1 != null) {//pointer2 != null - NullPointerException, len of pointer2 >= pointer1
+            if (pointer1.val == pointer2.val) {
+                pointer1 = pointer1.next;
+                pointer2 = pointer2.next;
+            } else return false;
+        }
+        return true;
+    }
+    private ListNode reverse(ListNode center) {//reverse the list
+        ListNode head = null;
+        while (center != null) {
+            ListNode tmp = center.next;
+            center.next = head;
+            head = center;
+            center = tmp;
+        }
+        return head;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
