@@ -1,0 +1,35 @@
+//requirement: in constant time
+//using stack - time complexity: O(1); space complexity: O(n)
+class MinStack {
+    private Stack<Integer> stack = new Stack<>();
+    private int min = Integer.MAX_VALUE; //store the minimum element
+    /** initialize your data structure here. */
+    public MinStack() {}    
+    public void push(int x) { //Push element x onto stack.
+        if (x <= min) {
+            stack.push(min); //store the 2nd min
+            min = x;
+        }
+        stack.push(x);
+    }  
+    public void pop() { //Removes the element on top of the stack
+        int tmp = stack.pop(); //pop the peek
+        if (tmp == min)
+            min = stack.pop(); //if peek is min, pop the 2nd peek(store the 2nd min)
+    }    
+    public int top() { //Get the top element
+        return stack.peek();
+    }   
+    public int getMin() { //Retrieve the minimum element in the stack
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
