@@ -1,0 +1,56 @@
+//iterative
+//time complexity: O(n); sapce complexity: O(n)
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true; //edge case
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        stack.add(root);
+        while ( !stack.isEmpty() ) {
+            TreeNode tmp1 = stack.pop();
+            TreeNode tmp2 = stack.pop();
+            if (tmp1 == null && tmp2 == null) continue;
+            else if (tmp1 == null || tmp2 == null) return false; //edge case!!!!
+            else if (tmp1.val != tmp2.val) return false;
+            stack.add(tmp1.left);
+            stack.add(tmp2.right);
+            stack.add(tmp1.right);
+            stack.add(tmp2.left);
+        }
+        return true;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ 
+ 
+ 
+ 
+ //recursive
+//time complexity: O(n); sapce complexity: O(n)
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true; //edge case
+        return helper(root.left, root.right);
+    }
+    
+    private boolean helper(TreeNode n1, TreeNode n2) {
+        if (n1 == null && n2 == null) return true;
+        else if (n1 == null || n2 == null) return false;
+        else if (n1.val != n2.val) return false;
+        return helper(n1.left, n2.right) && helper(n1.right, n2.left);
+    }
+}
