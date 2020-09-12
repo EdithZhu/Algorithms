@@ -1,0 +1,44 @@
+//greedy
+//time complexity: O(n),space complexity: O(1)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        int preSum = nums[0], postSum = nums[0];//cannot initialize preSum = 0!!!
+        for (int i=1;i<nums.length;i++) {
+            if (preSum + nums[i] > nums[i])
+                preSum += nums[i];
+            else preSum = nums[i];
+            postSum = Math.max(postSum, preSum);
+        }
+        return postSum;//return its sum
+    }
+}
+
+
+
+//divide and conquer
+//time complexity: O(nlogn),space complexity: O(1)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        return helper(nums, 0, nums.length - 1);
+    }
+    private int helper(int[] nums, int start, int end) {
+        if (start == end) return nums[start];
+        if (start > end) return Integer.MIN_VALUE;
+        int center = (start + end) /2;    
+        int max1 = helper(nums, start, center-1);
+        int max2 = helper(nums, center+1, end);
+        int sum1 = 0, sum2 = 0;
+        int submax1 = 0, submax2 = 0;  
+        for (int i=center-1;i>=start;i--) { // NOT 'i>start' !!!
+            sum1 = sum1 + nums[i];
+            submax1 = Math.max(submax1, sum1);
+        }
+        for (int i=center+1;i<=end;i++) { // NOT 'i<end' !!!
+            sum2 = sum2 + nums[i];
+            submax2 = Math.max(submax2, sum2);
+        }
+        return Math.max( Math.max(max1, max2), submax1 + nums[center] + submax2 );
+    }
+}
