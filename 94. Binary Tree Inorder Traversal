@@ -1,0 +1,40 @@
+//inorder traversal - left, root, right
+//Follow up: Recursive solution is trivial, could you do it iteratively?
+//iterative
+//time complexity: O(n); space complexity: O(n)
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> lst = new ArrayList<>();//store the result
+        Stack<TreeNode> stack = new Stack<>();//store visited nodes
+        
+        if (root == null) return lst;
+        TreeNode tmp = root;
+        while (tmp != null) {
+            stack.add(tmp);
+            tmp = tmp.left;//start from left
+            while (tmp == null) {
+                if (stack.isEmpty())
+                    return lst;
+                tmp = stack.pop();//root
+                lst.add(tmp.val);
+                tmp = tmp.right;//right
+            }
+        }
+        return lst;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
