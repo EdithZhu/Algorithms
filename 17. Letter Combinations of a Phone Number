@@ -1,0 +1,26 @@
+//2-abc, 3-def,4-ghi,5-jkl,6-mno,7-pqrs,8-tuv,9-wxyz
+//backtrack
+class Solution {
+    private char[][] letters = {{'a','b','c'},{'d','e','f'},{'g','h','i'},{'j','k','l'},
+                           {'m','n','o'},{'p','q','r','s'},{'t','u','v'},{'w','x','y','z'}};
+    public List<String> letterCombinations(String digits) {
+        List<String> lst = new ArrayList<>();
+        StringBuffer sb = new StringBuffer(digits);
+        if (digits.length() == 0 || digits == null) return lst;
+        helper(lst, sb, digits, 0);       
+        return lst;
+    }
+    
+    private void helper(List<String> lst, StringBuffer sb, String digits, int location) {
+        if (location == digits.length()) {
+            lst.add(sb.toString());
+            return;
+        }
+        
+        for (char cha : letters[digits.charAt(location) - '2']) {
+            sb.setCharAt(location, cha);//renew the StringBuffer
+            helper(lst, sb, digits, location + 1);
+        }
+    }
+
+}
