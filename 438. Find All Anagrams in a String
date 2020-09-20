@@ -1,27 +1,22 @@
-//sliding window
-//Time complexity: O(Ns+Np) since it is one pass along both strings.
-//Space complexity: O(1) pCount and sCount contain 26 elements each.
+//array
+//time complexity: O(m); space complexity: O(1)
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        int ns = s.length(), np = p.length();
-        int [] pCount = new int[26];
-        int [] sCount = new int[26];
-        List<Integer> output = new ArrayList();
-        if (ns < np) return output;
-        
-        for (char ch : p.toCharArray()) {
-            pCount[ch - 'a']++;
+        List<Integer> res = new ArrayList<>();
+        if (s.length() == 0 || s == null || s.length() < p.length()) return res;
+        int[] arr = new int[26];
+        int[] tmp = new int[26];
+        for (char cha: p.toCharArray()) //store the pattern of p
+            arr[cha - 'a']++;        
+        int pointer = 0, slen = s.length(), plen = p.length();
+        while (pointer < s.length()) {
+            tmp[s.charAt(pointer) - 'a']++;//append the pattern
+            if (pointer > plen-1)
+                tmp[s.charAt(pointer - plen) - 'a']--;//remove the void element
+            if (Arrays.equals(tmp, arr)) 
+                res.add(pointer - plen + 1);//starting index: pointer - plen + 1
+            pointer++;
         }
-        //sliding window on string s
-        for (int i=0;i<ns;i++) {
-            sCount[s.charAt(i)-'a']++;
-            
-            if (i >= np)
-                sCount[s.charAt(i-np) - 'a']--;
-            
-            if (Arrays.equals(pCount,sCount))
-                output.add(i-np+1);               
-        }
-        return output;
+        return res;
     }
 }
