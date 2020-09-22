@@ -1,0 +1,28 @@
+//Arrays.sort
+//time complexity: O(nlogn); space complexity: O(1)
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        if (nums == null || nums.length == 0) return Integer.MIN_VALUE;
+        if (k < 1 || k > nums.length) return Integer.MIN_VALUE;
+        Arrays.sort(nums);
+        return nums[nums.length-k];
+    }
+}
+
+
+//priority queue
+//time complexity: O(n); space complexity: O(1)
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        if (nums == null || nums.length == 0) return Integer.MIN_VALUE;
+        //You may assume k is always valid, 1 ≤ k ≤ array's length.
+        //if (k < 1 || k > nums.length) return Integer.MIN_VALUE;
+        Queue<Integer> q = new PriorityQueue<>();//in order
+        for (int num : nums) {
+            q.offer(num);
+            if (q.size() > k)//keep the size of k
+                q.poll();
+        }
+        return q.poll();//poll the k-th element
+    }
+}
