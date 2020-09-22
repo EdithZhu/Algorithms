@@ -1,0 +1,27 @@
+//dynamic programming
+//time complexity: O(mn); space complexity: O(n)
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if (amount == 0) return 0;//edge case
+        int[] res = new int[amount+1];
+        res[0] = 0;//amount=0, no need extra coins
+        for (int i=1;i<amount+1;i++)
+            res[i] = Integer.MAX_VALUE;//set as largest steps first
+        for (int i=0;i<amount+1;i++) {
+            for (int coin:coins) {
+                int sum = coin + i;
+                if (sum <= amount && coin < Integer.MAX_VALUE) {
+                    ////take care out of bound:input-[1,2147483647],2
+                    if (res[i] == Integer.MAX_VALUE)
+                        res[sum] = res[sum];
+                    else 
+                        res[sum] = Math.min(res[i] + 1, res[sum]);
+                    //else res[sum] = res[sum];
+                }
+            }
+        }
+        if (res[amount] == Integer.MAX_VALUE)//not exist
+            return -1;
+        else return res[amount];
+    }
+}
