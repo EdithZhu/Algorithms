@@ -1,0 +1,29 @@
+//sort + set + 2 pointers
+//time complexity: O(n*n); space complexity: O(n)
+//0 <= nums.length <= 3000, -10^5 <= nums[i] <= 10^5
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 3) return res;//edge case
+        int len = nums.length;
+        HashSet<List<Integer>> set = new HashSet<>();
+        Arrays.sort(nums);//sort the array
+        for (int i=0;i<len-2;i++){
+            int pointer1 = i+1;
+            int pointer2 = len-1;
+            while (pointer1<pointer2) {
+                int diff = -nums[pointer1]-nums[pointer2];
+                if (nums[i] == diff){
+                    set.add(Arrays.asList(nums[i],nums[pointer1],nums[pointer2]));
+                    pointer1++;
+                    pointer2--;
+                } else if (nums[i] < diff)
+                    pointer1++;
+                else pointer2--;
+            }
+        }
+        for (List<Integer> lst : set) //convert set to list
+            res.add(lst);
+        return res;
+    }
+}
