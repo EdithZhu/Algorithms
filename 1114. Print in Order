@@ -1,0 +1,34 @@
+class Foo {
+    private boolean flag1 = false;
+    private boolean flag2 = false;
+    private Object lock = new Object();
+    public Foo() {}
+    public void first(Runnable printFirst) throws InterruptedException {
+        synchronized(lock) {
+            // printFirst.run() outputs "first". Do not change or remove this line.
+            printFirst.run();
+            flag1 = true;
+            lock.notifyAll();
+        }
+    }
+    public void second(Runnable printSecond) throws InterruptedException {
+        synchronized(lock) {
+            while (flag1 == false) {
+                lock.wait();
+            }
+            // printSecond.run() outputs "second". Do not change or remove this line.
+            printSecond.run();
+            flag2 = true;
+            lock.notifyAll();
+        }
+    }
+    public void third(Runnable printThird) throws InterruptedException {
+        synchronized(lock) {
+            while (flag2 == false) {
+                lock.wait();
+            }
+            // printThird.run() outputs "third". Do not change or remove this line.
+            printThird.run();
+        }
+    }
+}
