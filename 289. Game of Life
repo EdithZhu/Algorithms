@@ -1,0 +1,30 @@
+//for-loop
+//births and deaths occur simultaneously. 1. solve it in-place 2.infinite board
+//time complexity: O(n*n); space complexity: O(n*n)
+class Solution {
+    public void gameOfLife(int[][] board) {
+        int row = board.length;
+        int col = board[0].length;
+        int[][] res = Arrays.stream(board).map(int[]::clone).toArray(int[][]::new);
+        int[] step = new int[]{-1,0,1};
+        for (int i=0;i<row;i++) {
+            for (int j=0;j<col;j++) {
+                int count = 0;//count the neighbor = 1
+                for (int m=0;m<3;m++) {
+                    for (int n=0;n<3;n++) {
+                        if (!(step[m] == 0 && step[n] == 0)) {//not itself
+                            int rowtmp = i + step[m];
+                            int coltmp = j + step[n];
+                            if (rowtmp>=0 && rowtmp<row && coltmp>=0 && coltmp<col && res[rowtmp][coltmp] == 1)//check valid
+                                count++;//count live neighbor
+                        }
+                    }
+                }
+                if (res[i][j] == 1 && (count<2 || count >3))
+                    board[i][j] = 0;
+                if (res[i][j] == 0 && count==3)
+                    board[i][j] = 1;
+            }
+        }        
+    }
+}
