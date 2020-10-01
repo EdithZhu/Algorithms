@@ -1,0 +1,33 @@
+//while-loop
+//time complexity: O(n); space complexity: O(1)
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) return null;//edge case
+        ListNode copy = head;
+        int count = 0;
+        while(copy != null) {
+            copy = copy.next;
+            count++;
+        }
+        if (count == 1 && n == 1) return null;//edge case
+        if (count == n) return head.next;//edge case
+        int index = count - n;
+        ListNode res = head;
+        while (index>1) {
+            res = res.next;
+            index--;
+        }
+        res.next = res.next.next;
+        return head;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
