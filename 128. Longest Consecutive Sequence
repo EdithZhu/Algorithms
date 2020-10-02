@@ -1,0 +1,31 @@
+//TreeSet + ArrayList + while-loop
+//time complexity: O(n); space complexity: O(n)
+//Your algorithm should run in O(n) complexity
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        if (nums.length == 1) return 1;
+        Set<Integer> set = new TreeSet<>();
+        for (int num : nums) 
+            set.add(num);
+        ArrayList<Integer> lst = new ArrayList<>(set);
+        int len = 1;
+        int maxLen = 1;
+        int index = 1;
+        int prev = lst.get(0);
+        while (index < lst.size()) {
+            if (prev + 1 == lst.get(index)) {
+                prev = lst.get(index);
+                len++;
+                index++;
+            }
+            else {
+                len = 1;
+                prev = lst.get(index);
+                index++;
+            }
+            maxLen = Math.max(maxLen,len);
+        }
+        return maxLen;        
+    }
+}
