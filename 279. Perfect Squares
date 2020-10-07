@@ -1,0 +1,51 @@
+//dynamic programming
+class Solution {
+    public int numSquares(int n) {      
+        ArrayList<Integer> lst = new ArrayList<>();
+        lst.add(0);//start from 0
+        while (lst.size() <= n){
+            int min = Integer.MAX_VALUE;
+            int len = lst.size();
+            for (int i = 1; i*i <= len; i++)
+                min = Math.min(min, lst.get(len-i*i)+1);
+            lst.add(min);
+        }
+        return lst.get(n);
+    }
+}
+
+
+
+//recusive
+class Solution {
+    public int numSquares(int n) {      
+        int min = n;
+        int count = 1;
+        while ( (int)Math.pow(count,2) <= n){
+            int quot = n / (int)Math.pow(count,2);
+            int mod = n % (int)Math.pow(count,2);
+            min = Math.min(min, quot + numSquares(mod));
+            count++;
+        }
+        return min;
+
+    }
+}
+
+
+
+//math - tricky!!!
+//according to 'four-square theorem', result is in range of {1,2,3,4}
+class Solution {
+    public int numSquares(int n) {      
+        while (n % 4 == 0) // get quotient
+            n /= 4;
+        if (n % 8 == 7) return 4; // case 1: n mod 8 = 7
+        for (int i = 0; i*i <= n; i++){
+            int b = (int) Math.sqrt(n - i*i);
+            if (i*i + b*b == n)
+                return i == 0 ? 1 : 2;//case 2, case 3
+        }
+        return 3;//case 4
+    }
+}
