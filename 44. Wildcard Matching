@@ -31,3 +31,42 @@ class Solution {
         return true;
     }
 }
+
+
+
+
+//backtracking
+/* When encountering'*', we only consider the sub-problems before the next'*', 
+not the sub-problems all the way to the end. So as to avoid a lot of sub-problem calculations. */
+//time complexity: O(nlogn); space complexity: O(1)
+class Solution {
+    public boolean isMatch(String s, String p) {
+        boolean flag = false;
+        int slen = s.length();
+        int plen = p.length();
+        int j = 0;//pointer for string p
+        int sidx = 0, pidx = 0;
+        for (int i = 0;i<slen;) {
+            if ( j == plen) {
+                if (flag == false) return false;
+                else if (p.charAt(plen-1) == '*') return true;
+                else {
+                    i = ++sidx;
+                    j = pidx;
+                }
+            }
+            if (p.charAt(j) == '?') {i++; j++;}
+            else if (p.charAt(j) == '*') {sidx = i; pidx = ++j; flag = true;}
+            else {
+                if (s.charAt(i) == p.charAt(j)) {i++; j++;}
+                else if (flag == true) {i = ++sidx; j = pidx;}
+                else return false;
+            }
+        }
+        while (j < plen && p.charAt(j) == '*') {
+            j++;
+        }
+        return j == plen;
+    }
+}
+
