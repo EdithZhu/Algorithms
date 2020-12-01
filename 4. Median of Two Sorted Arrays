@@ -1,0 +1,32 @@
+//binary search
+//time complexity - O(log(min(m,n)))
+//space complexity - O(1)
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len1 = nums1.length, len2 = nums2.length;
+        if (len1 > len2) return findMedianSortedArrays(nums2, nums1);
+        boolean flag = (len1 + len2)%2 == 0 ? true : false;//even - true, odd - false
+        int p1 = 0, p2 = len1;
+        int half = (len1 + len2 + 1)/2;//consider odd and even 
+        while (p1 <= p2) {
+            int x = (p1 + p2)/2;//binary search
+            int y = half - x;
+            int x1 = x==0 ? Integer.MIN_VALUE : nums1[x-1];
+            int x2 = x==len1 ? Integer.MAX_VALUE : nums1[x];
+            int y1 = y==0 ? Integer.MIN_VALUE : nums2[y-1];
+            int y2 = y==len2 ? Integer.MAX_VALUE : nums2[y];
+            if (x1<=y2 && y1<=x2){
+                if (flag) {//even
+                    return (Math.max(x1,y1)+Math.min(x2,y2))/2.0;
+                } else {//odd
+                    return (double) Math.max(x1,y1);
+                }
+            } else if (x1 > y2) {
+                p2 = x-1;
+            } else {
+                p1 = x+1;
+            }          
+        }
+        return 0.0;
+    }
+}
