@@ -1,0 +1,31 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return head;
+        ListNode res = new ListNode(0);
+        ListNode tmp = res;
+        ListNode head1 = head;        
+        int val = Integer.MIN_VALUE;
+        
+        while (head1 != null) {
+            if (head1.next != null && head1.next.val == head1.val) {
+                val = head1.val;
+            }
+            else if (val < head1.val) {
+                tmp.next = new ListNode(head1.val);
+                tmp = tmp.next;
+            }
+            head1 = head1.next;
+        }
+        return res.next;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
