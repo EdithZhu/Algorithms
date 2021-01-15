@@ -1,0 +1,18 @@
+class Solution {
+    public boolean isScramble(String s1, String s2) {
+        if (s1.equals(s2)) return true;
+        int len = s1.length();
+        char[] arr1 = s1.toCharArray();
+        char[] arr2 = s2.toCharArray();
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        String ss1 = new String(arr1);
+        String ss2 = new String(arr2);
+        if (ss1.equals(ss2) == false) return false;
+        for (int i=1;i<len;i++) {
+            if (isScramble(s1.substring(0,i),s2.substring(0,i)) && isScramble(s1.substring(i),s2.substring(i))) return true;
+            if (isScramble(s1.substring(0,i),s2.substring(len-i)) && isScramble(s1.substring(i),s2.substring(0,len-i))) return true;
+        } 
+        return false;
+    }
+}
