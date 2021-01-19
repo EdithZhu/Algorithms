@@ -1,0 +1,25 @@
+//binary search - Time O(logN), Space O(1)
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return new int[]{-1,-1};
+        int len = nums.length;
+        int start = 0;
+        int end = len - 1;        
+        int p1 = 0, p2 = 0;//store the result
+        while(start < end) {
+            int mid = start + (end - start)/2;            
+            if (nums[mid] < target) start = mid + 1;
+            else end = mid;
+        }        
+        if (nums[start] != target) return new int[]{-1,-1};//cannot find the target        
+        p1 = start;
+        end = len - 1;
+        while(start<end) {
+            int mid = start + (end - start)/2 + 1;
+            if (nums[mid] > target) end = mid - 1;
+            else start = mid;            
+        }
+        p2 = end;        
+        return new int[]{p1,p2};        
+    }
+}
