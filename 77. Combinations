@@ -1,0 +1,17 @@
+//recursive
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new LinkedList();
+        helper(1, n, k, res, new LinkedList<Integer>());
+        return res;
+    }
+    
+    private void helper(int start, int n, int k, List<List<Integer>> res, LinkedList<Integer> tmp) {
+        if(tmp.size() == k) res.add(new LinkedList(tmp));
+        for(int i = start;i<=n;i++) {
+            tmp.add(i);
+            helper(i+1,n,k,res,tmp);
+            tmp.removeLast();
+        }
+    }
+}
