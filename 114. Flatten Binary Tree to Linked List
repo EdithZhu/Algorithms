@@ -1,0 +1,36 @@
+//iterative
+class Solution {
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+        TreeNode pointer = root;
+        while(pointer != null) {
+            TreeNode tmp = pointer.left;
+            if (tmp == null) {
+                pointer = pointer.right;
+            } else if (tmp != null) {
+                while (tmp.right != null) {
+                    tmp = tmp.right;
+                }
+                tmp.right = pointer.right;
+                pointer.right = pointer.left;
+                pointer.left = null;
+                pointer = pointer.right;
+            }
+        }
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
