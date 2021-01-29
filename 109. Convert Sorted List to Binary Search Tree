@@ -1,0 +1,89 @@
+//recursive
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+        
+        ListNode centerNode = findCenter(head);
+        TreeNode res = new TreeNode(centerNode.val);
+        if (head == centerNode) return res;
+        res.left = sortedListToBST(head);
+        res.right = sortedListToBST(centerNode.next);
+        return res;
+        
+    }
+    
+    private ListNode findCenter(ListNode head) {
+        ListNode slowNode = head;
+        ListNode fastNode = head;
+        ListNode prevNode = null;
+        while(fastNode != null && fastNode.next != null) {
+            prevNode = slowNode;
+            slowNode = slowNode.next;
+            fastNode = fastNode.next.next;
+        }
+        if (prevNode != null) prevNode.next = null;
+        return slowNode;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ 
+ 
+ 
+ 
+ 
+ 
+ //reference - approach 3
+class Solution {
+    private ListNode head;
+    
+    public TreeNode sortedListToBST(ListNode head) {
+        int size = size(head);
+        this.head = head;
+        return segBST(0,size-1);
+    }
+    
+    private int size(ListNode head) {
+        ListNode node = head;
+        int cnt = 0;
+        while(node != null) {
+            node = node.next;
+            cnt++;
+        }
+        return cnt;
+    }
+    
+    private TreeNode segBST(int start, int end) {
+        if (start > end) return null;
+        int mid = (start + end) / 2;
+        TreeNode leftNode = segBST(start, mid - 1);
+        TreeNode node = new TreeNode(this.head.val);
+        node.left = leftNode;
+        this.head = this.head.next;
+        node.right = segBST(mid+1, end);
+        return node;
+    }
+}
