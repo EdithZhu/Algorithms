@@ -1,0 +1,22 @@
+//All elements of candidates are distinct
+//dp
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>>[] dp = new ArrayList[target + 1];
+        for (int i=0;i<target+1;i++) {
+            dp[i] = new ArrayList<>();
+        }
+        dp[0].add(new ArrayList<>());
+        for (int i=0;i<candidates.length;i++) {
+            int num = candidates[i];
+            for (int j=num;j<target+1;j++) {
+                for (List<Integer> lst : dp[j-num]) {
+                    List<Integer> tmp = new ArrayList(lst);
+                    tmp.add(num);
+                    dp[j].add(tmp);
+                }
+            }
+        }
+        return dp[target];
+    }
+}
