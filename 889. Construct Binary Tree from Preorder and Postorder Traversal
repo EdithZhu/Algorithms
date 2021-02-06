@@ -1,0 +1,42 @@
+class Solution {
+    public TreeNode constructFromPrePost(int[] pre, int[] post) {
+        int lenPre = pre.length;
+        int lenPost = post.length;
+        return helper(pre,post,0,lenPre-1,0,lenPost-1);
+    }
+    
+    private TreeNode helper(int[] pre, int[] post, int s1, int e1, int s2, int e2) {
+        if (s1 >e1 || s2 >e2) return null;
+        TreeNode head = new TreeNode(pre[s1]);
+        if (s1 == e1) return head;
+        int idx = idxFn(post,s2,e2,pre[s1+1]);
+        int tmp = idx - s2;
+        head.left = helper(pre,post,s1+1,s1+1+tmp,s2,idx);
+        head.right = helper(pre,post,s1+2+tmp,e1,idx+1,e2-1);
+        return head;
+    }
+    
+    private int idxFn(int[] post, int s, int e, int num) {
+        for (int i = s;i<=e;i++) {
+            if (post[i] == num){
+                return i;
+            }
+        }
+        return s;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
