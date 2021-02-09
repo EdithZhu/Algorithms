@@ -1,0 +1,58 @@
+class Solution {
+    private int sum = 0;
+    public int numTeams(int[] rating) {
+        for (int i=0;i<=rating.length-2;i++) {
+            helper(rating, i, 1, true);
+            helper(rating, i, 1, false);
+        }
+        return sum;
+    }
+    //flag == true:in order, flag == false:reverse
+    private void helper(int[] rating, int idx, int cnt, boolean flag) {
+        if (cnt == 3){
+            sum++;
+            return;
+        }
+        int len = rating.length;
+        if (idx >= (len-(3-cnt))) return;
+        for (int i=idx+1;i<len;i++) {
+            if(flag && rating[i] >= rating[idx])
+                continue;
+            if(!flag && rating[i] <= rating[idx])
+                continue;
+            helper(rating,i,cnt+1,flag);
+        }
+    }
+}
+
+
+
+
+
+//dp
+class Solution {
+    public int numTeams(int[] rating) {
+        int sum = 0;
+        int len = rating.length;
+        int[] dp = new int[len];
+        for(int i=0;i<len;i++) {
+            for (int j=i;j>=0;j--) {
+                if (rating[j] > rating[i]) {
+                    dp[i] = dp[i] + 1;
+                    sum = sum + dp[j];
+                }
+            }
+        }
+        Arrays.fill(dp,0);
+        for(int i=0;i<len;i++) {
+            for (int j=i;j>=0;j--) {
+                if (rating[j] < rating[i]) {
+                    dp[i] = dp[i] + 1;
+                    sum = sum + dp[j];
+                }
+            }
+        }
+        return sum;
+    }
+}
+
