@@ -1,0 +1,32 @@
+//TreeSet + map
+class Solution {
+    public List<List<String>> displayTable(List<List<String>> orders) {
+        Set<String> set = new TreeSet<>();
+        Map<Integer, Map<String, Integer>> map = new HashMap<>();
+        int maxTable = Integer.MIN_VALUE;
+        for (List<String> element : orders) {
+            int table = Integer.parseInt(element.get(1));
+            maxTable = Math.max(maxTable, table);
+            String food = element.get(2);
+            set.add(food);
+            if ( !map.containsKey(table) )  map.put(table,new HashMap<>());
+            map.get(table).put(food, map.get(table).getOrDefault(food,0) + 1);
+        }
+        List<String> header = new ArrayList<>();
+        header.add("Table");
+        for (String el : set) header.add(el);
+        List<List<String>> res = new ArrayList<>();
+        res.add(header);
+        for (int i=0;i<=maxTable;i++) {
+            if (!map.containsKey(i)) continue;
+            List<String> lst = new ArrayList<>();
+            lst.add(i+"");
+            Map<String, Integer> pairs = map.get(i);
+            for (int j=1;j<header.size();j++) {
+                lst.add(""+pairs.getOrDefault(header.get(j),0));
+            }
+            res.add(lst);
+        }
+        return res;
+    }
+}
