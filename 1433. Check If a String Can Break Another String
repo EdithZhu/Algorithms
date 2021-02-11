@@ -1,0 +1,38 @@
+class Solution {
+    public boolean checkIfCanBreak(String s1, String s2) {
+        char[] arr1 = s1.toCharArray(), arr2 = s2.toCharArray();
+        int len = arr1.length;
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        int sum1 = 0, sum2 = 0;
+        for (int i=0;i<len;i++) {sum1 +=arr1[i]; sum2 +=arr2[i];}
+        boolean res = true;
+        if (len == 1) return true;
+        else if (sum1 < sum2) {
+            for (int i=0;i<len;i++) {
+                if (arr1[i] > arr2[i]) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        else if (sum1 > sum2) {
+            for (int i=0;i<len;i++) {
+                if (arr1[i] < arr2[i]) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        else if (sum1 == sum2) {
+            boolean reverse = false;
+            for (int i=0;i<len;i++) {
+                if (arr1[i] != arr2[i]) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+}
