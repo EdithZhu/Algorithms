@@ -1,0 +1,39 @@
+//backtracking
+class CombinationIterator {
+    private List<String> lst;
+    private int idx = 0;
+    //Initializes the object with a string characters of sorted distinct lowercase English letters 
+    public CombinationIterator(String characters, int combinationLength) {
+        this.lst = new ArrayList<>();
+        helper(characters, combinationLength, 0, new StringBuilder());
+    }
+    //Returns the next combination of length combinationLength in lexicographical order
+    public String next() {
+        this.idx = this.idx + 1;//update the next index
+        return lst.get(this.idx -1);
+    }
+    //Returns true if and only if there exists a next combination
+    public boolean hasNext() {
+        int size = lst.size();
+        return this.idx <= size-1;
+    }
+    
+    public void helper(String characters, int combinationLength, int i, StringBuilder sb) {
+        int len = sb.length();
+        if (len == combinationLength) {
+            this.lst.add(sb.toString());
+            return;
+        }
+        for (int index = i;index<characters.length();index++) {
+            helper(characters, combinationLength, index+1, sb.append(characters.charAt(index)));
+            sb.delete(len,sb.length());
+        }
+    }
+}
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator obj = new CombinationIterator(characters, combinationLength);
+ * String param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
