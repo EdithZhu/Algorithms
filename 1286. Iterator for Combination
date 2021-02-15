@@ -37,3 +37,50 @@ class CombinationIterator {
  * String param_1 = obj.next();
  * boolean param_2 = obj.hasNext();
  */
+
+
+
+
+
+
+
+//reference - Algorithm L by D. E. Knuth
+class CombinationIterator {
+    private String chars;
+    private int combinationLen;
+    private int[] nums;
+    private int len;
+    private boolean hasnext;
+    //Initializes the object with a string characters of sorted distinct lowercase English letters 
+    public CombinationIterator(String characters, int combinationLength) {
+        this.chars = characters;
+        this.combinationLen = combinationLength;
+        this.len = characters.length();
+        this.hasnext = true;
+        this.nums = new int[this.combinationLen];
+        for (int i=0;i<this.combinationLen;i++) nums[i] = i;
+    }
+    //Returns the next combination of length combinationLength in lexicographical order
+    public String next() {
+        StringBuilder sb = new StringBuilder();
+        for (int num : nums) sb.append(chars.charAt(num));
+        int i = this.combinationLen-1;
+        while (i >= 0 && nums[i] == len - combinationLen + i) i--;
+        if (i >= 0) {
+            nums[i]++;
+            for (int j=i+1;j<combinationLen;j++) nums[j] = nums[i] + j - i;
+        } else hasnext = false;
+        return sb.toString();
+    }
+    //Returns true if and only if there exists a next combination
+    public boolean hasNext() {
+        return hasnext;
+    }
+}
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator obj = new CombinationIterator(characters, combinationLength);
+ * String param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
