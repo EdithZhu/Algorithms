@@ -1,0 +1,25 @@
+//two non-negative integers num1 and num2
+class Solution {
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        int len1 = num1.length(), len2 = num2.length();
+        char[] arr1 = num1.toCharArray(), arr2 = num2.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        int[] digits = new int[len1+len2];
+        for (int i = len1-1;i>=0;i--) {
+            for (int j=len2-1;j>=0;j--) {
+                int val = (arr1[i] - '0') * (arr2[j] - '0');
+                int curr =digits[i+j+1] + val;
+                digits[i+j+1] = curr % 10;
+                digits[i+j] = digits[i+j] + curr / 10;
+            }
+        }
+        int pointer = 0;
+        for (int num : digits) {
+            if (num != 0) break;
+            else pointer++;
+        }
+        for(int i=pointer;i<digits.length;i++) sb.append(digits[i]+"");
+        return sb.toString();
+    }
+}
