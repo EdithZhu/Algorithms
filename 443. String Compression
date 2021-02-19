@@ -1,0 +1,21 @@
+//chars[i] is a lower-case English letter, upper-case English letter, digit, or symbol.
+//Could you solve it using only O(1) extra space?
+class Solution {
+    public int compress(char[] chars) {
+        int len = chars.length;
+        int p = 0;
+        int cnt = 0;
+        for (int i=0;i<len;i++) {
+            cnt++;
+            if(i == len-1 || (chars[i+1] != chars[i])) {
+                chars[p] = chars[i];
+                p++;
+                if (cnt != 1) {
+                    for (char cha: (cnt+"").toCharArray()) chars[p++] = cha;
+                }
+                cnt = 0;
+            }
+        }
+        return p;
+    }
+}
