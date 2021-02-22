@@ -1,0 +1,25 @@
+//quicksort
+class Solution {
+    public int[] sortArray(int[] nums) {
+        sort(nums,0,nums.length-1);
+        return nums;
+    }
+    private void sort(int[] nums, int start, int end) {
+        if (start >= end) return;
+        int startP = start, endP = end;
+        int mid = nums[(startP + endP)/2];
+        while (startP<=endP) {
+            while (startP<=endP && mid>nums[startP]) startP++;
+            while (startP<=endP && mid<nums[endP]) endP--;
+            if (startP <= endP) {
+                int tmp = nums[startP];
+                nums[startP] = nums[endP];
+                nums[endP] = tmp;
+                startP++;
+                endP--;
+            }
+        }
+        sort(nums, startP, end);
+        sort(nums,start,endP);
+    }
+}
