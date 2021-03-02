@@ -1,0 +1,18 @@
+//recursive
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        helper(res, n, 0, 0, "");
+        return res;
+    }
+    private void helper(List<String> res, int n, int openBracket, int closeBracket, String str) {
+        if (openBracket == n && openBracket == closeBracket) {
+            res.add(str);
+            return;
+        }
+        if (openBracket < n) 
+            helper(res, n, openBracket+1, closeBracket, str+"(");
+        if (openBracket > closeBracket)
+            helper(res, n, openBracket, closeBracket+1, str+")");
+    }
+}
