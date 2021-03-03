@@ -1,0 +1,20 @@
+//reference - math - tricky
+//1 <= n <= 16
+class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> lst = new ArrayList<>();
+        for(int i=1;i<=n;i++) {
+            if (i == 1) {
+                lst.add(0);
+                lst.add(1);
+            } else {
+                int highestBit = (int) Math.pow(2,i-1);
+                for (int j = highestBit - 1;j>=0;j--) {//reverse
+                    int lowBits = lst.get(j);
+                    lst.add(highestBit + lowBits);
+                }
+            }
+        }
+        return lst;
+    }
+}
