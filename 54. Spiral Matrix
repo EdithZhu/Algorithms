@@ -1,0 +1,27 @@
+//1 <= m, n <= 10
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int[][] moves = {{0,1},{1,0},{0,-1},{-1,0}};
+        int rowLen = matrix.length, colLen = matrix[0].length;
+        int row = 0;
+        int col = 0;
+        int pointer = 0;
+        boolean[][] flags = new boolean[rowLen][colLen];
+        for(int i=0;i<rowLen*colLen;i++) {
+            flags[row][col] = true;
+            res.add(matrix[row][col]);
+            int rowTmp = row + moves[pointer][0];
+            int colTmp = col + moves[pointer][1];
+            if (rowTmp>=0 && rowTmp<=rowLen-1 && colTmp>=0 && colTmp<=colLen-1 && flags[rowTmp][colTmp]==false) {
+                row = rowTmp;
+                col = colTmp;
+            } else {
+                pointer = (1+pointer)%4;
+                row = row + moves[pointer][0];
+                col = col + moves[pointer][1];
+            }
+        }
+        return res;
+    }
+}
