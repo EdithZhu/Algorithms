@@ -1,0 +1,18 @@
+class Solution {
+    public String largestNumber(int[] nums) {
+        int len = nums.length;
+        String[] arr = new String[len];
+        for(int i=0;i<len;i++) 
+            arr[i] = String.valueOf(nums[i]);
+        //Arrays.sort(arr,(o1,o2) -> o2.compareTo(o1)); //[3,30,34,5,9], "9534303", expect - "9534330"
+        Arrays.sort(arr,(o1,o2) -> {
+            String sum1 = o1 + o2;
+            String sum2 = o2 + o1;
+            return sum2.compareTo(sum1);});
+        String res = "";
+        for(String str: arr)
+            res += str;
+        return res.indexOf("0") == 0 ? "0" : res; 
+    }
+}
+
