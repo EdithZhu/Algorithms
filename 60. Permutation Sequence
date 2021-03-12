@@ -1,0 +1,22 @@
+//hard - math - factorial
+class Solution {
+    public String getPermutation(int n, int k) {
+        int[] factors = new int[n+1];
+        for (int i=1;i<n+1;i++) 
+            factors[i] = i;
+        for (int i=2;i<n+1;i++) 
+            factors[i] = factors[i] * factors[i-1];
+        List<Integer> lst = new ArrayList<>();
+        for (int i=1;i<n+1;i++) 
+            lst.add(i);
+        String str = "";
+        for(int i=n;i>=2;i--) {
+            str = str + lst.get((k-1)/factors[i-1]);
+            lst.remove((k-1)/factors[i-1]);
+            k = (k-1)%factors[i-1] + 1;
+        }
+        if (!lst.isEmpty()) 
+            str = str + lst.get(0);
+        return str;
+    }
+}
