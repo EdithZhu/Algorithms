@@ -1,0 +1,42 @@
+//follow up - You may only use constant extra space.
+//time - O(n), space - O(1)
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) return root;
+        Node first = root;
+        while (first.left != null) {
+            Node tmp = first;
+            while(tmp != null) {
+                tmp.left.next = tmp.right;
+                if (tmp.next != null) {
+                    tmp.right.next = tmp.next.left;
+                }
+                tmp = tmp.next;
+            }
+            first = first.left;
+        }
+        return root;
+    }
+}
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
