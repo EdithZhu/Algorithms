@@ -1,0 +1,33 @@
+//stack
+class Solution {
+    public void reorderList(ListNode head) {
+        Stack<ListNode> stack = new Stack<>();
+        ListNode p = head;
+        while(p != null) {
+            stack.add(p);
+            p = p.next;
+        }
+        p = head;
+        while(p != null) {
+            ListNode last = stack.pop();
+            ListNode tmp = p.next;
+            p.next = last;
+            last.next = tmp;
+            p = tmp;
+            if(p != null && p.next == last) {
+                p.next = null;
+                break;
+            }
+        }
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
