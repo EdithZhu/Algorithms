@@ -1,0 +1,28 @@
+//set
+class Solution {
+    public int numComponents(ListNode head, int[] G) {
+        Set<Integer> set = new HashSet<>();
+        for(int num : G) set.add(num);//unique      
+        int cnt = 0;
+        int group = 0;
+        while(head != null) {
+            if(set.contains(head.val)) group = 1;
+            else if(group == 1) {
+                cnt++;
+                group = 0;
+            }
+            head = head.next;
+        }
+        return group == 0 ? cnt : cnt+1;
+    }
+}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
