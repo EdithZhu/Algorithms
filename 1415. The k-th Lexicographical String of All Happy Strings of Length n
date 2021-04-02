@@ -1,0 +1,25 @@
+//backtracking
+class Solution {
+    public String getHappyString(int n, int k) {
+        Set<String> set = new HashSet();
+        helper(0, n, new StringBuilder(), set);
+        List<String> lst = new ArrayList(set);
+        if (k > set.size()) return "";
+        Collections.sort(lst);
+        return lst.get(k-1);
+    }
+    private void helper(int start, int end, StringBuilder sb, Set<String> set) {
+        if (start == end) {
+            set.add(sb.toString());
+            return;
+        }
+        char last = ' ';
+        if (start > 0) last = sb.charAt(start-1);
+        for (char c = 'a'; c <= 'c'; c++) {
+            if (c == last) continue;
+            sb.append(c);
+            helper(start+1, end, sb, set);
+            sb.setLength(sb.length()-1);
+        }
+    }
+}
