@@ -1,0 +1,23 @@
+class Solution {
+    public int trap(int[] height) {
+        int p1=0;
+        int p2 = height.length-1;
+        int ans = 0;
+        int l_max=0, r_max=0;
+        while(p1<p2) {
+            if (height[p1]< height[p2]) {
+                l_max = Math.max(l_max, height[p1]);
+                ans += l_max - height[p1];
+                p1++;
+            } else {
+                r_max = Math.max(r_max, height[p2]);
+                ans += r_max - height[p2];
+                p2--;
+            }
+        }
+        return ans;
+    }
+}
+//2 pointers
+//Time complexity: O(n). Single iteration of O(n).
+//Space complexity: O(1)
